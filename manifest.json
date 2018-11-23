@@ -13,11 +13,6 @@
 		"default_icon": "images/icon16.png"
 	},
 
-	// "content_scripts": [{
- //    	"matches": ["*://portal.mcpsmd.org/*"],
- //    	"js": ["lib/jquery-3.3.1.min.js", "contentScript.js"]
- //   	}],
-
 	"background": {
     	"scripts": ["background.js"]
   	},
