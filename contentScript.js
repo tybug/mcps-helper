@@ -3,8 +3,9 @@ function await_mcps_javascript_load() {
 	
     function check_condition() {
     // 	console.log($(".ng-binding"))
-    // console.log($(".ng-scope"))
-        if ($(".ng-binding").length > 7) {
+	// console.log($(".ng-scope"))
+	// arbitrary condition where both the grade page and the home page are under when unloaded, but over when loaded
+        if ($(".ng-binding").length > 7) { 
             clearInterval(timer);
             main()
         }
@@ -73,7 +74,7 @@ function main(){
 		grade = calculateGradePercent(num, denom);
 
 		if(grade == "N/A"){
-			percent.text(grade);
+			percent_cell.text(grade);
 			return;
 		}
 
