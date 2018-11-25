@@ -1,13 +1,13 @@
 function await_mcps_javascript_load() {
 	var timer = setInterval(check_condition, 10);
 	
-    function check_condition() {
-    // 	console.log($(".ng-binding"))
-	// console.log($(".ng-scope"))
-	// arbitrary condition where both the grade page and the home page are under when unloaded, but over when loaded
+	function check_condition() {
+		// console.log($(".ng-binding"))
+		// console.log($(".ng-scope"))
+		// arbitrary condition where both the grade page and the home page are under when unloaded, but over when loaded
         if ($(".ng-binding").length > 7) { 
             clearInterval(timer);
-            main()
+            main();
         }
     }
 }
@@ -45,7 +45,8 @@ function main(){
 				<td class="text-center" style="background-color: rgb(207, 214, 212);"></td>
 			</tr>`);
 	
-		$("#num, #denom").on("input", updateGrades)
+	$("#num, #denom").on("input", updateGrades);
+	$("#category-select").on("change", updateGrades);
 
 
 	// Get the categories and their weights from the second table, then add them to the input button we just created
@@ -161,7 +162,6 @@ function updateGrades(){
 	updated_grades[index] = [updated_grades[index][0], parseFloat(updated_grades[index][1]) + num, parseFloat(updated_grades[index][2]) + denom]; // add test grade values
 
 	weighted_grade = 0;
-	console.log("\n")
 	for (var i = 0; i < updated_grades.length; i++) {
 		num_category = parseFloat(updated_grades[i][1]);
 		denom_category = parseFloat(updated_grades[i][2]);
