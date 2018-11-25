@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"name": "mcps-helper",
-	"version": "1.0",
+	"version": "0.2",
 	"description": "Color highlights for mcps grading",
 	"icons": {
 		"128": "images/icon128.png",
