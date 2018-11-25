@@ -21,8 +21,42 @@ COLOR_X = "#939393"; // dark(er) grey
 COLOR_EMPTY = "#cfd6d4"; // light grey
 COLOR_EXTENSION = "#e0dbff"; // very light blue/purple
 
+var grade_info = []; // [[weight, num, denom], ...]
+
+
 function main(){
 
+	updateColors();
+
+	// select the third table, add a new row for testing assignments
+	$(".grid:eq(2)")
+	.append(`<tr>
+				<td class="ng-binding" style="background-color: ` + COLOR_EXTENSION + `;">Enter a new assignment</td>
+				<td class="ng-binding" width="350px" style="background-color: ` + COLOR_EXTENSION + `;">Select category: 
+					<select id="category-select">
+						
+					</select
+				</td>
+				<td style="background-color: ` + COLOR_EXTENSION + `;"></td>
+				<td class="text-right" width="122px" style="background-color: ` + COLOR_EXTENSION + `;">
+					<input type="text" size="5.5px" id="num"> / <input type="text" size="5.5px" id="denom">
+				</td>
+				<td class="text-right" width="80px"></td>
+				<td class="text-center" style="background-color: rgb(207, 214, 212);"></td>
+			</tr>`);
+	
+		$("#num, #denom").on("input", updateGrades)
+
+
+	// Get the categories and their weights from the second table, then add them to the input button we just created
+	$(".grid:eq(1)").find("tr td:nth-child(2)").each(function(index){
+		$("#category-select").append("<option value=" + index + ">" + $(this).prev().text().trim() + "</option>");
+		parts = $(this).next().text().trim().split("/");
+		grade_info.push([$(this).text().trim(), parts[0], parts[1]]);
+	});
+}
+
+function updateColors(){
 	$("td.ng-binding, td.ng-scope").each(function(){
 		text = $(this).text().trim();
 		color = null;
@@ -81,30 +115,8 @@ function main(){
 		percent_cell.text(grade + "%");
 
 			
-	})
-
-	// select the third table, add a new row for testing assignments
-	$(".grid:eq(2)")
-	.append(`<tr>
-				<td class="ng-binding" style="background-color: ` + COLOR_EXTENSION + `;">Enter a new assignment</td>
-				<td class="ng-binding" width="350px" style="background-color: ` + COLOR_EXTENSION + `;">Select category: 
-					<select>
-						<option>Summative (50)</option>
-						<option>Formative (40)</option>
-						<option>HW for Prac/Prep (10)</option>
-					</select
-				</td>
-				<td class="ng-binding" style="background-color: ` + COLOR_EXTENSION + `;"></td>
-				<td class="text-right" width="122px" style="background-color: ` + COLOR_EXTENSION + `;">
-					<input type="text" size="5.5px" id="num"> / <input type="text" size="5.5px" id="denom">
-				</td>
-				<td class="text-right ng-binding" width="80px"></td>
-				<td class="text-center ng-binding" style="background-color: rgb(207, 214, 212);"></td>
-			</tr>`);
-	
-		$("#num, #denom").on("input", updateGrades)
+	});
 }
-
 function calculateGradePercent(num, denom){
 	// returns num/denom, accurate to one decimal point, with trailing zeroes removed
 	// returns N/A if both num and denom are zero
@@ -125,10 +137,12 @@ function updateGrades(){
 	percent_cell = $("#num").parent().next();
 	grade_cell = percent_cell.next();
 
-	grade = calculateGrade(num, denom);
+	grade = calculateGradePercent(num, denom);
 	color_data = calculateColorData(grade);
-	color = color_data[0]
-	grade_letter = color_data[1]
+	if(color_data != null){
+		color = color_data[0];
+		grade_letter = color_data[1];
+	}
 
 	if(grade == "Infinity" || grade == "N/A"){ // reset back to nothing, or don't display anything to start with. Happens with num = 1, denom = 0
 		grade = "";
@@ -136,10 +150,48 @@ function updateGrades(){
 		color = COLOR_EMPTY;
 	}
 
-
+	num = parseFloat(num);
+	denom = parseFloat(denom);
 	percent_cell.text(grade ? grade + "%" : grade); // don't add the percent sign if grade is empty
-	grade_cell.text(grade_letter)
+	grade_cell.text(grade_letter);
 	grade_cell.css("backgroundColor", color);
+
+	index = $("#category-select").val();
+	updated_grades = grade_info.slice();
+	updated_grades[index] = [updated_grades[index][0], parseFloat(updated_grades[index][1]) + num, parseFloat(updated_grades[index][2]) + denom]; // add test grade values
+
+	weighted_grade = 0;
+	console.log("\n")
+	for (var i = 0; i < updated_grades.length; i++) {
+		num_category = parseFloat(updated_grades[i][1]);
+		denom_category = parseFloat(updated_grades[i][2]);
+
+		// console.log(num_category);
+		// console.log(denom_category);
+		// if a category has no points yet, its weight doesn't matter, so assume 100% in that category.
+		// TODO THIS LOGIC IS WRONG!! RESULTS IN MUCH HIGHER GRADES THAN EXPECTED. We could give the remaining weight
+		// of an NG category to a category that does have a grade, but what happens if two categories are graded
+		// and one is NG? To which category does the extra weights go?
+		if(denom_category == 0) {  
+			num_category = 100; 
+			denom_category = 100;  
+		} 
+		unweighted = ( num_category / denom_category);
+		// console.log(unweighted);
+		weighted_grade +=  unweighted * parseFloat(updated_grades[i][0]);
+		// console.log(weighted_grade);
+	}
+
+	current_grade_letter = $(".grid:eq(0)").find("tr:first-child td:last-child"); // last cell of first row in first table
+	color_data = calculateColorData(weighted_grade);
+	if(color_data == null){
+		return;
+	}
+	current_grade_letter.text(color_data[1]);
+	current_grade_letter.css("backgroundColor", color_data[0])
+	current_grade_letter.prev().text(parseFloat(weighted_grade.toFixed(1)) + "%"); // previous cell is the current grade percent
+
+	updateColors();
 }
 
 function calculateColorData(grade){
@@ -152,9 +204,10 @@ function calculateColorData(grade){
 		return [COLOR_C, "C"];
 	} else if(grade >= 59.45){
 		return [COLOR_D, "D"];
-	} else {
+	} else if(grade < 59.45){
 		return [COLOR_E, "E"];
 	}
+	return null;
 }
 
 await_mcps_javascript_load()
