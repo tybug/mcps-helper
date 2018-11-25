@@ -9,3 +9,6 @@ Viewing your grades will never be something to look forward to, but at least thi
 
 ## Credits
 This extension was created to mimic the functionality of the [mymcps+ app](https://itunes.apple.com/us/app/mymcps/id1291038640), on browser. The color scheme was chosen to match the app's, which many students are already familiar with.
+
+## Disclaimer
+The developers of this extension are in no way affiliated with Montgomery County, nor do we guarantee the accuracy of testing new grades.
