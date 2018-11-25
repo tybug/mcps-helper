@@ -7,7 +7,7 @@ Viewing your grades will never be something to look forward to, but at least thi
 * Previous empty percent column is filled in 
 * Minor aesthetic positioning adjustments
 
-## Credits
+## Inspiration
 This extension was created to mimic the functionality of the [mymcps+ app](https://itunes.apple.com/us/app/mymcps/id1291038640), on browser. The color scheme was chosen to match the app's, which many students are already familiar with.
 
 ## Disclaimer
