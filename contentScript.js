@@ -53,7 +53,7 @@ function main(){
 	$(".grid:eq(1)").find("tr td:nth-child(2)").each(function(index){
 		$("#category-select").append("<option value=" + index + ">" + $(this).prev().text().trim() + "</option>");
 		parts = $(this).next().text().trim().split("/");
-		grade_info.push([$(this).text().trim(), parts[0], parts[1]]);
+		grade_info.push([$(this).text().trim(), parseFloat(parts[0]), parseFloat(parts[1])]);
 	});
 }
 
@@ -158,28 +158,33 @@ function updateGrades(){
 	grade_cell.css("backgroundColor", color);
 
 	index = $("#category-select").val();
-	updated_grades = grade_info.slice();
-	updated_grades[index] = [updated_grades[index][0], parseFloat(updated_grades[index][1]) + num, parseFloat(updated_grades[index][2]) + denom]; // add test grade values
+	updated_grades = [...grade_info];
+	// console.log(JSON.parse(JSON.stringify(updated_grades)))	
 
+	updated_grades[index] = [updated_grades[index][0], parseFloat(updated_grades[index][1]) + (isNaN(num) ? 0 : num), parseFloat(updated_grades[index][2]) + (isNaN(denom) ? 0 : denom)]; // add test grade values
 	weighted_grade = 0;
+
+	// If there are any NG categories, divide the weights of each of the G category by 1 - sum(NG_weights).
+	// .5 G, .1 G, .4 NG = .5/.6 and .1/.6 weights, which add up to 1 and give the properly weighted grade
+	weight_modifier = 1; 
+	for (var i = 0; i < updated_grades.length; i++) {
+		num_category = parseFloat(updated_grades[i][1]);
+		denom_category = parseFloat(updated_grades[i][2]);
+		if(denom_category == 0){
+			weight_modifier -= parseFloat(updated_grades[i][0]) / 100;
+		}
+	}
+
 	for (var i = 0; i < updated_grades.length; i++) {
 		num_category = parseFloat(updated_grades[i][1]);
 		denom_category = parseFloat(updated_grades[i][2]);
 
-		// console.log(num_category);
-		// console.log(denom_category);
-		// if a category has no points yet, its weight doesn't matter, so assume 100% in that category.
-		// TODO THIS LOGIC IS WRONG!! RESULTS IN MUCH HIGHER GRADES THAN EXPECTED. We could give the remaining weight
-		// of an NG category to a category that does have a grade, but what happens if two categories are graded
-		// and one is NG? To which category does the extra weights go?
-		if(denom_category == 0) {  
-			num_category = 100; 
-			denom_category = 100;  
-		} 
 		unweighted = ( num_category / denom_category);
-		// console.log(unweighted);
-		weighted_grade +=  unweighted * parseFloat(updated_grades[i][0]);
-		// console.log(weighted_grade);
+		if(isNaN(unweighted)){
+			continue; // 0/0 NG category, already accounted for by the weight_modifier, so skip
+		}
+
+		weighted_grade +=  unweighted * parseFloat(updated_grades[i][0]) / weight_modifier;
 	}
 
 	current_grade_letter = $(".grid:eq(0)").find("tr:first-child td:last-child"); // last cell of first row in first table
@@ -189,7 +194,9 @@ function updateGrades(){
 	}
 	current_grade_letter.text(color_data[1]);
 	current_grade_letter.css("backgroundColor", color_data[0])
-	current_grade_letter.prev().text(parseFloat(weighted_grade.toFixed(1)) + "%"); // previous cell is the current grade percent
+	if(weighted_grade != "Infinity"){ // 1/0
+		current_grade_letter.prev().text(parseFloat(weighted_grade.toFixed(1)) + "%"); // previous cell is the current grade percent
+	}
 
 	updateColors();
 }
