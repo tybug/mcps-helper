@@ -1,8 +1,8 @@
 {
 	"manifest_version": 2,
-	"name": "mcps-helper",
+	"name": "portal-plus",
 	"version": "0.2",
-	"description": "Color highlights for mcps grading",
+	"description": "Enhanced experience with mcps portal",
 	"icons": {
 		"128": "images/icon128.png",
 		"48": "images/icon48.png",
