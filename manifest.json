@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
-	"name": "portal-plus",
-	"version": "0.2",
+	"name": "portal+",
+	"version": "0.4",
 	"description": "Enhanced experience with mcps portal",
 	"icons": {
 		"128": "images/icon128.png",
