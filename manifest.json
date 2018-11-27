@@ -19,7 +19,7 @@
   	},
 
   	"permissions": [
-		"*://*/*",
+		"*://portal.mcpsmd.org/*",
 		"tabs"
   	]
 }
