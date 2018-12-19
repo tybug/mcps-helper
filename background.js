@@ -1,5 +1,5 @@
 chrome.tabs.onUpdated.addListener(function(tabId, details, tab){
-	if(details.status != "complete" || !tab.url.includes("mcps")){
+	if(details.status != "complete" || !tab.url.includes("portal.mcpsmd.org")){
 		return
 	}
 
