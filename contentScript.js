@@ -1,11 +1,11 @@
 function await_mcps_javascript_load() {
 	var timer = setInterval(check_condition, 10);
-	
+
 	function check_condition() {
 		// console.log($(".ng-binding"))
 		// console.log($(".ng-scope"))
 		// arbitrary condition where both the grade page and the home page are under when unloaded, but over when loaded
-        if ($(".ng-binding").length > 7) { 
+        if ($(".ng-binding").length > 7) {
             clearInterval(timer);
             main();
         }
@@ -27,7 +27,7 @@ var grade_info = []; // [[weight, num, denom], ...]
 function main(){
 
 	// make the full td cell a clickable link with some js
-	$("a.ng-binding").each(function(){ 
+	$("a.ng-binding").each(function(){
 		link = $(this).attr("href");
 		if(link.includes("mailto") || $(this).width() == 0) { // teacher name with mail href, or class MP not taken yet
 			return true; // jquery `each` equivelant of `continue`
@@ -44,9 +44,9 @@ function main(){
 	$(".grid:eq(2)")
 	.append(`<tr>
 				<td class="ng-binding" style="background-color: ` + COLOR_EXTENSION + `;">Enter a new assignment</td>
-				<td class="ng-binding" width="350px" style="background-color: ` + COLOR_EXTENSION + `;">Select category: 
+				<td class="ng-binding" width="350px" style="background-color: ` + COLOR_EXTENSION + `;">Select category:
 					<select id="category-select">
-						
+
 					</select
 				</td>
 				<td style="background-color: ` + COLOR_EXTENSION + `;"></td>
@@ -56,7 +56,7 @@ function main(){
 				<td class="text-right" width="80px"></td>
 				<td class="text-center" style="background-color: rgb(207, 214, 212);"></td>
 			</tr>`);
-	
+
 	$("#num, #denom").on("input", updateGrades);
 	$("#category-select").on("change", updateGrades);
 
@@ -127,7 +127,7 @@ function updateColors(){
 
 		percent_cell.text(grade + "%");
 
-			
+
 	});
 }
 
@@ -173,14 +173,14 @@ function updateGrades(){
 
 	index = $("#category-select").val();
 	updated_grades = [...grade_info];
-	// console.log(JSON.parse(JSON.stringify(updated_grades)))	
+	// console.log(JSON.parse(JSON.stringify(updated_grades)))
 
 	updated_grades[index] = [updated_grades[index][0], parseFloat(updated_grades[index][1]) + (isNaN(num) ? 0 : num), parseFloat(updated_grades[index][2]) + (isNaN(denom) ? 0 : denom)]; // add test grade values
 	weighted_grade = 0;
 
 	// If there are any NG categories, divide the weights of each of the G category by 1 - sum(NG_weights).
 	// .5 G, .1 G, .4 NG = .5/.6 and .1/.6 weights, which add up to 1 and give the properly weighted grade
-	weight_modifier = 1; 
+	weight_modifier = 1;
 	for (var i = 0; i < updated_grades.length; i++) {
 		num_category = parseFloat(updated_grades[i][1]);
 		denom_category = parseFloat(updated_grades[i][2]);
