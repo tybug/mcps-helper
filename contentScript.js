@@ -1,5 +1,5 @@
 function await_mcps_javascript_load() {
-	var timer = setInterval(check_condition, 10);
+	var timer = setInterval(check_condition, 100);
 	function check_condition() {
 		// console.log($(".ng-binding"))
 		// arbitrary condition where both the grade page and the home page are under when unloaded, but over when loaded
