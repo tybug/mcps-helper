@@ -47,7 +47,7 @@ function main(){
 
 					</select
 				</td>
-				<td style="background-color: ` + COLOR_EXTENSION + `;"><b>read before using this row</b> <a href=https://pastebin.com/raw/NuTFz3nu>https://pastebin.com/raw/NuTFz3nu</a></td>
+				<td style="background-color: ` + COLOR_EXTENSION + `;"></td>
 				<td class="text-right" width="122px" style="background-color: ` + COLOR_EXTENSION + `;">
 					<input type="text" size="5.5px" id="num"> / <input type="text" size="5.5px" id="denom">
 				</td>
