@@ -5,7 +5,7 @@ db.db
 .vscode/settings.json
 log.txt
 nohup.out
-
+*.pem
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
