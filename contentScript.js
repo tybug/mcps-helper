@@ -72,6 +72,13 @@ function main(){
 		parts = $(this).next().text().trim().split("/");
 		grade_info.push([$(this).text().trim(), parseFloat(parts[0]), parseFloat(parts[1])]);
 	});
+
+	// collapse the right and top panels
+	$("#parentPageTemp").addClass("uiNoNav")
+	$("#parentPageTemp").addClass("uiContMax")
+	$("#btnContMax").addClass("collapsed")
+	$("#btnNoNav").addClass("collapsed")
+
 }
 
 function updateColors(){
