@@ -20,7 +20,7 @@ COLOR_EMPTY = "#cfd6d4"; // light grey
 COLOR_EXTENSION = "#e0dbff"; // very light blue/purple
 
 var grade_info = []; // [[weight, num, denom], ...]
-
+var ignored_rows = ["LUNCH", "ADVISORY", "COUNSELOR", "HOMEROOM"] // ignore
 
 function main(){
 
@@ -33,7 +33,15 @@ function main(){
 		// parent is the td cell
 		$(this).parent().attr("onclick", "window.location = '" + link + "'");
 		$(this).parent().css("cursor", "pointer");
-
+	});
+	$("div.ng-binding").each(function(){
+		console.log($(this).html());
+		if(ignored_rows.includes($(this).html())) {
+			// $(this) = div with LUNCH (name of the class) label
+			// $(this).parent() = the full cell in the table
+			// $(this).parent().parent() = the row in the table
+			$(this).parent().parent().remove();
+		}
 	});
 
 	updateColors();
