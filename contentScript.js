@@ -27,7 +27,7 @@ function main(){
 	// make the full td cell a clickable link with some js
 	$("a.ng-binding").each(function(){
 		link = $(this).attr("href");
-		if(link.includes("mailto") || $(this).width() == 0) { // teacher name with mail href, or class MP not taken yet
+		if(link.includes("mailto") || $(this).width() == 0) { // teacher name with mail href, or class MP (marking period) not taken yet
 			return true; // jquery `each` equivelant of `continue`
 		}
 		// parent is the td cell
