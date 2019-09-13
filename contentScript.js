@@ -35,7 +35,6 @@ function main(){
 		$(this).parent().css("cursor", "pointer");
 	});
 	$("div.ng-binding").each(function(){
-		console.log($(this).html());
 		if(ignored_rows.includes($(this).html())) {
 			// $(this) = div with LUNCH (name of the class) label
 			// $(this).parent() = the full cell in the table
