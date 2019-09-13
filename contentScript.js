@@ -20,10 +20,9 @@ COLOR_EMPTY = "#cfd6d4"; // light grey
 COLOR_EXTENSION = "#e0dbff"; // very light blue/purple
 
 var grade_info = []; // [[weight, num, denom], ...]
-var ignored_rows = ["LUNCH", "ADVISORY", "COUNSELOR", "HOMEROOM"] // ignore
+var ignored_rows = ["LUNCH", "ADVISORY", "COUNSELOR", "HOMEROOM"];
 
-function main(){
-
+function main() {
 	// make the full td cell a clickable link with some js
 	$("a.ng-binding").each(function(){
 		link = $(this).attr("href");
@@ -39,7 +38,9 @@ function main(){
 			// $(this) = div with LUNCH (name of the class) label
 			// $(this).parent() = the full cell in the table
 			// $(this).parent().parent() = the row in the table
-			$(this).parent().parent().remove();
+			row = $(this).parent().parent();
+			row.toggle();
+			row.addClass("portalplus-ignored")
 		}
 	});
 
@@ -74,10 +75,17 @@ function main(){
 	});
 
 	// collapse the right and top panels
-	$("#parentPageTemp").addClass("uiNoNav")
-	$("#parentPageTemp").addClass("uiContMax")
-	$("#btnContMax").addClass("collapsed")
-	$("#btnNoNav").addClass("collapsed")
+	$("#parentPageTemp").addClass("uiNoNav");
+	$("#parentPageTemp").addClass("uiContMax");
+	$("#btnContMax").addClass("collapsed");
+	$("#btnNoNav").addClass("collapsed");
+	button = $("<a class=\"button\">Toggle Hidden Rows</a>");
+	$('a[href="interim_sec.html#tabOneContent"').parent().append(button)
+	button.click(function(){
+		$(".portalplus-ignored").each(function(){
+			$(this).toggle()
+		})
+	})
 
 }
 
