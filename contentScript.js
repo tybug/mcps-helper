@@ -77,8 +77,12 @@ function main() {
 	// collapse the right and top panels
 	$("#parentPageTemp").addClass("uiNoNav");
 	$("#parentPageTemp").addClass("uiContMax");
-	$("#btnContMax").addClass("collapsed");
-	$("#btnNoNav").addClass("collapsed");
+	// portal web devs messed up..we're giving them the expanded class to collapse them, very backwards, but it's what works with portal.
+	$("#btnContMax").addClass("expanded");
+	$("#btnContMax").removeClass("collapsed");
+	$("#btnNoNav").addClass("expanded");
+	$("#btnNoNav").removeClass("collapsed");
+
 	// only add a new button if there isn't already one
 	if($("#portalplus-row-toggle").length == 0) {
 		button = $("<a id=\"portalplus-row-toggle\"class=\"button\">Toggle Hidden Rows</a>");
