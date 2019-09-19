@@ -86,6 +86,7 @@ function main() {
 	// only add a new button if there isn't already one
 	if($("#portalplus-row-toggle").length == 0) {
 		button = $("<a id=\"portalplus-row-toggle\"class=\"button\">Toggle Hidden Rows</a>");
+		// janky selector to pick the button that already exists and append ours to its parent
 		$('a[href="interim_sec.html#tabOneContent"').parent().append(button)
 		button.click(function(){
 			$(".portalplus-ignored").each(function(){
