@@ -5,6 +5,8 @@ I graduated from MCPS in 2020, so I will no longer be maintaining this repositor
 # portal-plus
 An improvement over the default mcps portal (https://portal.mcpsmd.org/) experience.
 
+Get it on the chrome web store here: https://chrome.google.com/webstore/detail/portal%20/lchkjeppckjncjoeckdfgioejgjbcpcd?hl=en
+
 ## Features
 * Color coding of grades
 * Ability to see how a new assignment would impact your grade
