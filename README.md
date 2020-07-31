@@ -1,14 +1,18 @@
+# Archival
+
+I graduated from MCPS in 2020, so I will no longer be maintaining this repository. You are free to fork/use it for whatever you wish.
+
 # portal-plus
-Viewing your grades will never be something to look forward to, but at least this extension can lessen the pain. 
+An improvement over the default mcps portal (https://portal.mcpsmd.org/) experience.
 
 ## Features
 * Color coding of grades
-* Ability to test a new grade
-* Previous empty percent column is filled in 
+* Ability to see how a new assignment would impact your grade
+* Previously empty percent column is filled in 
 * Minor aesthetic positioning adjustments
 
 ## Inspiration
 This extension was created to mimic the functionality of the [mymcps+ app](https://itunes.apple.com/us/app/mymcps/id1291038640), on browser. The color scheme was chosen to match the app's, which many students are already familiar with.
 
 ## Disclaimer
-The developers of this extension are in no way affiliated with Montgomery County, nor do we guarantee the accuracy of testing new grades.
+I am not affiliated with Montgomory County nor do I guarantee the accuracy of grades while using this extension.
