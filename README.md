@@ -1,4 +1,4 @@
-# Archival
+# Archival 07/31/2020
 
 I graduated from MCPS in 2020, so I will no longer be maintaining this repository. You are free to fork/use it for whatever you wish.
 
